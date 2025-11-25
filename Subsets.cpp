@@ -17,12 +17,6 @@ using namespace std;
         sub.pop_back();
     }
 
-    vector<vector<int>> subsets(vector<int>& nums) {
-        vector<int> empty;
-        generate(empty,0,nums);
-        return subset;
-    }
-
     int main(){
         int n;
         cin >> n;
