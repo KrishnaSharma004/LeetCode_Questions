@@ -1,24 +1,23 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <numeric>
 using namespace std;
 #define ll long long
-long long maximumScore(vector<int>& nums) {
+long long maximumScore(vector<int>& nums){
     int n = nums.size();
-    vector<int> p_sum(n,0);
-    for(int i=0;i<n;++i)
-        p_sum[i] = nums[i];
-    for(int i=1;i<n;++i){
-        p_sum[i] = p_sum[i] + p_sum[i-1];
-    }
-    int suffmin;
-    ll maxscore = p_sum[0] - *min_element(nums.begin()+1,nums.end());
+    vector<long long> score(n-1);
+    score[0] = nums[0] - *min_element(nums.begin()+1,nums.end());
     for(int i=1;i<n-1;++i){
-        suffmin = *min_element(nums.begin()+i+1,nums.end());
-        ll score_i = p_sum[i] - suffmin;
-        maxscore = max(score_i,maxscore);
+        long long suffmin = *min_element(nums.begin()+i+1,nums.end());
+        long long prifsum = accumulate(nums.begin(),nums.begin()+i,0LL);
+        score[i] = prifsum - suffmin;
     }
-    return maxscore;
+    for(int i=0;i<n-1;++i){
+        cout << score[i] << " ";
+    }
+    cout << endl;
+    return *max_element(score.begin(),score.end());
 }
 int main(){
     int n;
