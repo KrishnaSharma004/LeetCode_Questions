@@ -1,28 +1,32 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int search(vector<int>& nums, int target){
-    int l = 0, hi = nums.size() - 1;
-    while(l <= hi){
-        int mid = (l + hi) / 2;
-        if(nums[mid] == target) return mid;
-
-        if(nums[l] <= nums[mid]){
-            if(nums[l] <= target && target <= nums[mid]){
-                hi = mid - 1;
-            }else {
-                l = mid + 1;
-            }
-        }else{
-            if(nums[mid] <= target && target <= nums[hi]){
-                l = mid + 1;
+int search(vector<int>& nums, int target) {
+        int n = nums.size();
+        int lo = 0, hi = n - 1;
+        while (hi - lo > 0) {
+            int mid = (lo + hi) / 2;
+            if (nums[mid] == target)
+                return mid;
+            if(nums[lo] <= nums[mid]){
+                if(target >= nums[lo] && target < nums[mid]){
+                    hi = mid - 1;
+                }else{
+                    lo = mid + 1;
+                }
             }else{
-                hi = mid - 1;
+                if(target <= nums[hi] && target > nums[mid]){
+                    lo = mid + 1;
+                }else{
+                    hi = mid - 1;
+                }
             }
         }
+        if (nums[lo] == target)
+            return lo;
+        else
+            return -1;
     }
-    return -1;
-}
 
 int main(){
     int n, t;
